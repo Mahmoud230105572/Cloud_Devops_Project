@@ -13,6 +13,8 @@ A Microservices-based application to scan Docker images for vulnerabilities usin
    ```bash
    kubectl apply -f .
 2. Access Dashboard:
+   ```bash
    kubectl port-forward svc/dashboard 5000:5000 
 3. Access API:
+   ```bash
    kubectl port-forward svc/vuln-api 8000:8000
