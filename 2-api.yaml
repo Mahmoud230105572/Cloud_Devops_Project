@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: vuln-api
+spec:
+  type: NodePort  # عشان نقدر نوصله من بره الكلاستر لو حبينا
+  selector:
+    app: api
+  ports:
+    - port: 8000
+      targetPort: 8000
+      nodePort: 30001 # هنثبت البورت ده عشان ندخل عليه
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+      - name: api
+        image: my-vuln-api:v1  # الصورة اللي عملنا لها Load
+        imagePullPolicy: Never # عشان ياخد الصورة من اللوكل وميدورش عليها في النت
+        ports:
+        - containerPort: 8000
